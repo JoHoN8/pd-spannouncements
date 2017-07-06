@@ -7,12 +7,13 @@
   },
   "license": "ISC",
   "dependencies": {
-    "react": "latest",
-    "react-dom": "latest",
     "jquery": "latest",
     "moment": "latest",
+    "pd-spserverajax": "latest",
     "pd-sputil": "latest",
-    "pd-spserverajax": "latest"
+    "prop-types": "^15.5.10",
+    "react": "latest",
+    "react-dom": "latest"
   },
   "devDependencies": {
     "webpack": "latest",

@@ -1,25 +1,17 @@
 /**
 	app name pd-spannouncements
  */
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-//class component
-class App extends React.Component{
-	render() {
-		return (
-			<div>
-			</div>
-		);
-	}
-};
+import React from "react";
+import ReactDOM from "react-dom";
+import Announcements from "./components/announcementsPanel.jsx";
 
 //function component
 const App = () => {
-  return (
-  	<div>
-  	</div>
-  );
+	return (
+		<div>
+			<Announcements />
+		</div>
+	);
 };
 
 ReactDOM.render(<App />, document.getElementById('root'));

@@ -5,7 +5,8 @@ var gulp = require('gulp'),
     webpack = require('webpack'),
     webpackConfig = require('./webpack.config.js'),
     WebpackDevServer = require("webpack-dev-server"),
-    packageData = require("./package.json");
+    packageData = require("./package.json"),
+    connect = require('gulp-connect');;
 
 
 /************common webpack configs************/
@@ -50,26 +51,6 @@ gulp.task('webpack:dev', function (callback) {
     });
 });
 
-gulp.task('webpackServer', function () {
-    //custom dev config
-   webpackConfig.output.filename = 'app.js';
-
-   var compiler = webpack(webpackConfig, function (err, stats) {
-        if (err) {
-            throw new gutil.PluginError('webpack:build', err);
-        }
-        gutil.log('developer pack completed');
-    });
-
-    new WebpackDevServer(compiler, {
-        contentBase: "./dist"
-    }).listen(8080, "localhost", function(err) {
-        if(err) throw new gutil.PluginError("webpack-dev-server", err);
-        // Server listening
-        gutil.log("[webpack-dev-server]", "http://localhost:8080");
-    });
-});
-
 /***************sp save stuff***************************/
 gulp.task('saveScripts', function () {
     return gulp.src("./dist/**/*.js")
@@ -108,20 +89,13 @@ gulp.task('copyHTML', function () {
         .pipe(gulp.dest('./dist'));
 });
 
-    /*
-    to min
-    .pipe(rename({suffix: '.min'}))
-    .pipe(uglify())
-
-    Sass compile (gulp-ruby-sass)
-    Autoprefixer (gulp-autoprefixer)
-    Minify CSS (gulp-cssnano)
-    JSHint (gulp-jshint)
-    Concatenation (gulp-concat)
-    Uglify (gulp-uglify)
-    Compress images (gulp-imagemin)
-    LiveReload (gulp-livereload)
-    Caching of images so only changed images are compressed (gulp-cache)
-    Notify of changes (gulp-notify)
-    Clean files for a clean build (del)
-    */
+/****************server stuff****************************/
+gulp.task('startServer', function () {
+    connect.server({
+        root: './dist',
+        livereload: true
+    });
+});
+gulp.task('stopServer', function () {
+    connect.serverClose();
+});

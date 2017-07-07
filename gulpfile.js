@@ -4,6 +4,7 @@ var gulp = require('gulp'),
     spsave = require('gulp-spsave'),
     webpack = require('webpack'),
     webpackConfig = require('./webpack.config.js'),
+    WebpackDevServer = require("webpack-dev-server"),
     packageData = require("./package.json");
 
 
@@ -14,15 +15,18 @@ var gulp = require('gulp'),
  
 
 /*********webpack stuff*************************/
-gulp.task('dev', ['webpack:dev', 'copyHTML', 'copyCSS']);
-gulp.task('prod', ['webpack:prod', 'copyHTML', 'copyCSS']);
+gulp.task('dev', ['webpack:dev', 'copyHTML']);
+gulp.task('prod', ['webpack:prod', 'copyHTML']);
 gulp.task('saveAll', ['saveScripts', 'saveStyles', 'savePages']);
 
 gulp.task('webpack:prod', function (callback) {
     //custom production config
-    let UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
+    let UglifyJsPlugin = new webpack.optimize.UglifyJsPlugin();
+    let prodTrigger = new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    });
     webpackConfig.output.filename = 'app.min.js';
-    webpackConfig.plugins.push(new UglifyJsPlugin({ minimize: true }));
+    webpackConfig.plugins.push(prodTrigger, UglifyJsPlugin);
     
     webpack(webpackConfig, function (err, stats) {
         if (err) {
@@ -43,6 +47,26 @@ gulp.task('webpack:dev', function (callback) {
         }
         gutil.log('developer pack completed');
         callback();
+    });
+});
+
+gulp.task('webpackServer', function () {
+    //custom dev config
+   webpackConfig.output.filename = 'app.js';
+
+   var compiler = webpack(webpackConfig, function (err, stats) {
+        if (err) {
+            throw new gutil.PluginError('webpack:build', err);
+        }
+        gutil.log('developer pack completed');
+    });
+
+    new WebpackDevServer(compiler, {
+        contentBase: "./dist"
+    }).listen(8080, "localhost", function(err) {
+        if(err) throw new gutil.PluginError("webpack-dev-server", err);
+        // Server listening
+        gutil.log("[webpack-dev-server]", "http://localhost:8080");
     });
 });
 

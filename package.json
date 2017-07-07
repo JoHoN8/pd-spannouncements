@@ -16,18 +16,19 @@
     "react-dom": "latest"
   },
   "devDependencies": {
-    "webpack": "latest",
-    "css-loader": "latest",
-    "style-loader": "latest",
     "babel-core": "latest",
     "babel-loader": "latest",
     "babel-preset-es2015": "latest",
-    "babel-preset-stage-0": "latest",
     "babel-preset-react": "latest",
-    "gulp": "latest",
-    "gulp-util": "latest",
-    "gulp-spsave": "latest",
+    "babel-preset-stage-0": "latest",
+    "css-loader": "latest",
     "eslint": "latest",
-    "eslint-plugin-react": "latest"
+    "eslint-plugin-react": "latest",
+    "gulp": "latest",
+    "gulp-spsave": "latest",
+    "gulp-util": "latest",
+    "style-loader": "latest",
+    "webpack": "latest",
+    "webpack-dev-server": "^2.5.0"
   }
 }

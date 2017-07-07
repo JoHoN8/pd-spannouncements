@@ -46,3 +46,6 @@
   font-size: 1.1em;
   margin: 0;
 }
+.announceContainer .annFilterLabel {
+  margin-right: 10px;
+}

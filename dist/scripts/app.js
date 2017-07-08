@@ -10312,6 +10312,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(99);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_announcementsPanel__ = __webpack_require__(185);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 /**
 	app name pd-spannouncements
  */
@@ -10319,55 +10327,116 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-//function component
-var App = function App() {
-    var ann = [{
-        title: "announcement 1",
-        department: "HQ",
-        body: "some announcement that is helpful"
+var App = function (_React$Component) {
+    _inherits(App, _React$Component);
+
+    function App(props) {
+        _classCallCheck(this, App);
+
+        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+        _this._handleFilter = _this._handleFilter.bind(_this);
+        _this._createOptions = _this._createOptions.bind(_this);
+        _this.state = {
+            annData: [],
+            department: "All"
+        };
+        return _this;
+    }
+
+    _createClass(App, [{
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            this.setState({
+                annData: [{
+                    title: "announcement 1",
+                    department: "HQ",
+                    body: "some announcement that is helpful"
+                }, {
+                    title: "announcement 2",
+                    department: "Field",
+                    body: "some event is happening here"
+                }, {
+                    title: "announcement 3",
+                    department: "LTCOP",
+                    body: "some event is happening here"
+                }, {
+                    title: "announcement 4",
+                    department: "HD",
+                    body: "some event is happening here"
+                }, {
+                    title: "announcement 5",
+                    department: "Field",
+                    body: "some event is happening here"
+                }, {
+                    title: "announcement 5",
+                    department: "HQ",
+                    body: "some event is happening here"
+                }, {
+                    title: "announcement 6",
+                    department: "HQ",
+                    body: "some event is happening here"
+                }, {
+                    title: "announcement 7",
+                    department: "HQ",
+                    body: "some event is happening here"
+                }, {
+                    title: "announcement 8",
+                    department: "HQ",
+                    body: "some event is happening here"
+                }, {
+                    title: "announcement 9",
+                    department: "HQ",
+                    body: "some event is happening here"
+                }]
+            });
+        }
     }, {
-        title: "announcement 2",
-        department: "Field",
-        body: "some event is happening here"
+        key: "_handleFilter",
+        value: function _handleFilter(event) {
+            var selected = event.target.value;
+            this.setState({
+                department: selected
+            });
+        }
     }, {
-        title: "announcement 3",
-        department: "LTCOP",
-        body: "some event is happening here"
+        key: "_createOptions",
+        value: function _createOptions() {
+            var selections = this.state.annData.reduce(function (ary, item) {
+                if (ary.indexOf(item.department) === -1) {
+                    ary.push(item.department);
+                }
+                return ary;
+            }, []);
+            selections.sort();
+            selections.unshift("All");
+            return selections.map(function (item, i) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "option",
+                    { key: i + 1, value: item },
+                    item
+                );
+            });
+        }
     }, {
-        title: "announcement 4",
-        department: "HD",
-        body: "some event is happening here"
-    }, {
-        title: "announcement 5",
-        department: "Field",
-        body: "some event is happening here"
-    }, {
-        title: "announcement 5",
-        department: "HQ",
-        body: "some event is happening here"
-    }, {
-        title: "announcement 6",
-        department: "HQ",
-        body: "some event is happening here"
-    }, {
-        title: "announcement 7",
-        department: "HQ",
-        body: "some event is happening here"
-    }, {
-        title: "announcement 8",
-        department: "HQ",
-        body: "some event is happening here"
-    }, {
-        title: "announcement 9",
-        department: "HQ",
-        body: "some event is happening here"
-    }];
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        "div",
-        null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_announcementsPanel__["a" /* default */], { announcements: ann })
-    );
-};
+        key: "render",
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_announcementsPanel__["a" /* default */], {
+                    selectHandler: this._handleFilter,
+                    optionsCreator: this._createOptions,
+                    announcements: this.state.annData,
+                    filtered: this.state.department !== "All",
+                    filterDepartment: this.state.department
+                })
+            );
+        }
+    }]);
+
+    return App;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
 __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(App, null), document.getElementById('root'));
 
@@ -22371,14 +22440,6 @@ module.exports = ReactDOMInvalidARIAHook;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__styleSheets_main__ = __webpack_require__(188);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__styleSheets_main___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__styleSheets_main__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 /*
     app name pd-spannouncements
     author: Ted
@@ -22389,113 +22450,57 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-var Announcements = function (_React$Component) {
-    _inherits(Announcements, _React$Component);
+var Announcements = function Announcements(props) {
 
-    function Announcements(props) {
-        _classCallCheck(this, Announcements);
-
-        var _this = _possibleConstructorReturn(this, (Announcements.__proto__ || Object.getPrototypeOf(Announcements)).call(this, props));
-
-        _this._handleFilter = _this._handleFilter.bind(_this);
-        _this._createOptions = _this._createOptions.bind(_this);
-        _this.state = {
-            annData: [],
-            department: "All"
-        };
-        return _this;
-    }
-
-    _createClass(Announcements, [{
-        key: "componentDidMount",
-        value: function componentDidMount() {
-            this.setState({
-                annData: this.props.announcements
-            });
-        }
-    }, {
-        key: "_handleFilter",
-        value: function _handleFilter(event) {
-            var selected = event.target.value;
-            this.setState({
-                department: selected
-            });
-        }
-    }, {
-        key: "_createOptions",
-        value: function _createOptions() {
-            var selections = this.state.annData.reduce(function (ary, item) {
-                if (ary.indexOf(item.department) === -1) {
-                    ary.push(item.department);
-                }
-                return ary;
-            }, []);
-            selections.sort();
-            selections.unshift("All");
-            return selections.map(function (item, i) {
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "option",
-                    { key: i + 1, value: item },
-                    item
-                );
-            });
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            var _this2 = this;
-
-            var filtered = this.state.department !== "All";
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "div",
+        { className: "announceContainer" },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "div",
+            { className: "selectControl" },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
-                { className: "announceContainer" },
+                null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "selectControl" },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "span",
-                            { className: "annFilterLabel" },
-                            "See specific organization"
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "span",
-                            null,
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "select",
-                                { className: "orgs", onChange: this._handleFilter },
-                                this._createOptions()
-                            )
-                        )
-                    )
+                    "span",
+                    { className: "annFilterLabel" },
+                    "See specific organization"
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "announcements" },
-
-                    //loop thru annoucements
-                    this.state.annData.reduce(function (ary, a, i) {
-
-                        if (!filtered || filtered && a.department === _this2.state.department) {
-                            ary.push(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components__["a" /* Announcement */], { key: i, announce: a }));
-                        }
-                        return ary;
-                    }, [])
+                    "span",
+                    null,
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "select",
+                        { className: "orgs", onChange: props.selectHandler },
+                        props.optionsCreator()
+                    )
                 )
-            );
-        }
-    }]);
+            )
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "div",
+            { className: "announcements" },
 
-    return Announcements;
-}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+            //loop thru annoucements
+            props.announcements.reduce(function (ary, a, i) {
+
+                if (!props.filtered || props.filtered && a.department === props.filterDepartment) {
+                    ary.push(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components__["a" /* Announcement */], { key: i, announce: a }));
+                }
+                return ary;
+            }, [])
+        )
+    );
+};
+Announcements.propTypes = {
+    selectHandler: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.func.isRequired,
+    optionsCreator: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.func.isRequired,
+    announcements: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.array.isRequired,
+    filtered: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.bool.isRequired,
+    filterDepartment: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.string.isRequired
+};
 
 /* harmony default export */ __webpack_exports__["a"] = (Announcements);
-
-Announcements.propTypes = {
-    announcements: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.array.isRequired
-};
 
 /***/ }),
 /* 186 */

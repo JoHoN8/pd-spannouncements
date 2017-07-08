@@ -4,7 +4,6 @@ var gulp = require('gulp'),
     spsave = require('gulp-spsave'),
     webpack = require('webpack'),
     webpackConfig = require('./webpack.config.js'),
-    WebpackDevServer = require("webpack-dev-server"),
     packageData = require("./package.json"),
     connect = require('gulp-connect');;
 

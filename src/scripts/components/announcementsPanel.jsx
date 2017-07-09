@@ -4,11 +4,10 @@
     date: 
 */
 import React from "react";
-import {Announcement} from "./components";
 import propTypes from "prop-types";
 import styles from "../../styleSheets/main";
 
-const Announcements = (props) => {
+export const AnnouncementPanel = (props) => {
     
     return (
         <div className="announceContainer">
@@ -17,33 +16,40 @@ const Announcements = (props) => {
                     <span className="annFilterLabel">See specific organization</span>
                     <span>
                         <select className="orgs" onChange={props.selectHandler}>
-                            {props.optionsCreator()}
+                            {props.options}
                         </select>
                     </span>
                 </div>
             </div>
             <div className="announcements">
-                {
-                    //loop thru annoucements
-                    props.announcements.reduce((ary, a, i) => {
-
-                        if (!props.filtered || props.filtered && a.department === props.filterDepartment) {
-                            ary.push(<Announcement key={i} announce={a}/>);
-                        }
-                        return ary;
-                    },[])
-                }
+                {props.announcements}
             </div>
         </div>
         
     );
 };
-Announcements.propTypes = {
+AnnouncementPanel.propTypes = {
     selectHandler: propTypes.func.isRequired,
-    optionsCreator: propTypes.func.isRequired,
-    announcements: propTypes.array.isRequired,
-    filtered: propTypes.bool.isRequired,
-    filterDepartment: propTypes.string.isRequired
+    options: propTypes.array.isRequired,
+    announcements: propTypes.array.isRequired
 };
 
-export default Announcements;
+export const Announcement = (props) => {
+    return (
+        <div className="announce">
+            <h1 className="title">{props.announce.title}</h1>
+            <h2 className="department">From: {props.announce.department}</h2>
+            <div className="body">
+                {props.announce.body}
+            </div>
+        </div>
+    );
+};
+
+Announcement.propTypes = {
+    announce: propTypes.shape({
+        title: propTypes.string.isRequired,
+        department: propTypes.string.isRequired,
+        body: propTypes.string.isRequired
+    })
+};

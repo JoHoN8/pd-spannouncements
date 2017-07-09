@@ -3,16 +3,18 @@
  */
 import React from "react";
 import ReactDOM from "react-dom";
-import Announcements from "./components/announcementsPanel";
+import {AnnouncementPanel, Announcement} from "./components/announcementsPanel";
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this._handleFilter = this._handleFilter.bind(this);
         this._createOptions = this._createOptions.bind(this);
+        this._createAnnouncements = this._createAnnouncements.bind(this);
         this.state = {
             annData: [],
-            department: "All"
+            department: "All",
+            filtered: false
         };
     }
     componentDidMount() {
@@ -72,9 +74,17 @@ class App extends React.Component {
         });
     }
     _handleFilter(event) {
-        let selected = event.target.value;
-        this.setState({
-            department: selected
+        let selected = event.target.value,
+            newStateObj = {};
+
+        this.setState((currentState) => {
+            if (selected === "All") {
+                newStateObj.filtered = false;
+            } else {
+                newStateObj.filtered = true;
+            }
+            newStateObj.department = selected;
+            return newStateObj;
         });
     }
     _createOptions() {
@@ -90,17 +100,25 @@ class App extends React.Component {
             return <option key={i+1} value={item}>{item}</option>;
         });
     }
+    _createAnnouncements() {
+        //loop thru annoucements
+        return this.state.annData.reduce((ary, a, i) => {
+
+            if (!this.state.filtered || this.state.filtered && a.department === this.state.department) {
+                ary.push(<Announcement key={i} announce={a}/>);
+            }
+            return ary;
+        },[]);
+    }
     render() {
         return (
             <div>
-            <Announcements 
-                selectHandler = {this._handleFilter}
-                optionsCreator = {this._createOptions}
-                announcements = {this.state.annData}
-                filtered = {this.state.department !== "All"}
-                filterDepartment = {this.state.department}
-            />
-        </div>
+                <AnnouncementPanel 
+                    selectHandler = {this._handleFilter}
+                    options = {this._createOptions()}
+                    announcements = {this._createAnnouncements()}
+                />
+            </div>
         );
     }
 }
